@@ -1,0 +1,32 @@
+{% extends 'layouts/base.html'%}
+
+{% load static %}
+
+{% block title %}Progetto Tech Web{% endblock %}
+
+
+{% block content %}
+<div id="app"></div>
+{% endblock %}
+
+{% block js_foot %}
+<script>
+    var nav = new Vue({
+        delimiters:['[[',']]'],
+        el: '#app',
+        data:{
+            
+        },
+        created() {
+            let self = this;
+            /*axios.get('/configurations').then(res => {
+                let config = res.data;
+
+                self.configs = config;
+            })*/
+        },
+        methods: {
+           
+        }
+    });
+{% endblock %}

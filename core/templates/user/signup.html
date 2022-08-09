@@ -1,0 +1,48 @@
+{% extends 'layouts/base.html'%}
+
+{% load static widget_tweaks %}
+
+{% block title %}Progetto Tech Web - SignUp{% endblock %}
+
+
+{% block content %}
+<div class="box" style="width: 500px; margin: 2rem auto">
+    <form role="form" method="post" action="">
+        {% csrf_token %}                   
+
+        <div class="field">
+            <div class="control">
+                <label class="label">Username</label>
+                {% render_field form.username class="input" %}
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <label class="label">password</label>
+                {% render_field form.password1 class="input" %}
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <label class="label">re-password</label>
+                {% render_field form.password2 class="input" %}
+            </div>
+        </div>
+        <div class="field">
+            <div class="control">
+                <label class="checkbox">
+                    <input type="checkbox" name="checkbox-fill-1" id="checkbox">
+                    Save Details
+                </label>
+            </div>
+        </div>
+        <button type="submit" name="login" class="button is-link">Login</button>
+    </form>
+    {% if msg %}
+    <label class="label has-text-danger">
+        <hr>
+        {{ msg }}
+    </label>
+    {% endif %}
+</div>
+{% endblock %}
