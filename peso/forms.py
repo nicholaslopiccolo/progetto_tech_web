@@ -1,16 +1,15 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, DateInput
+
 from .models import Peso
 
 class PesoForm(ModelForm):
     class Meta():
         model = Peso
-        fields = ['peso','date']
+        fields = ['peso','date','owner']
+        widgets = {
+            'date': DateInput(format=('%Y-%m-%d'), attrs={'class':'input','type': 'date'})
+        }
 
-    def save(self,user):
-        peso = self.cleaned_data.get("peso")
-        date = self.cleaned_data.get("date")
-        Peso(
-            peso=peso,
-            date=date,
-            owner=user
-        ).save()
+    def __init__(self, *args, **kwargs):
+        super(PesoForm,self).__init__(*args, **kwargs)
+        self.fields['owner'].required = False

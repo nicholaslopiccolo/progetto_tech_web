@@ -1,0 +1,44 @@
+{% for commento in commenti %}
+    <article class="media">
+        <figure class="media-left">
+            <p class="image is-64x64">
+                <img src="https://bulma.io/images/placeholders/128x128.png">
+            </p>
+        </figure>
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong>{{commento.owner.username}}</strong>
+                    <br>
+                    {{commento.commento}}
+                    <br>
+                    <small>{{commento.likes}}<a>Like</a> · {{commento.dislikes}}<a>Dislike</a> . <a>Reply</a></small>
+                </p>
+            </div>
+            {% if commento.reply %}
+                {% include "pasto/commento.html" %}
+            {% endif %}
+            
+        </div>
+    </article>
+{% endfor %}
+<!--INPUT DELL'UTENTE-->
+<article class="media">
+    <figure class="media-left">
+        <p class="image is-64x64">
+            <img src="https://bulma.io/images/placeholders/128x128.png">
+        </p>
+    </figure>
+    <div class="media-content">
+        <div class="field">
+            <p class="control">
+                <textarea class="textarea" placeholder="Add a comment..."></textarea>
+            </p>
+        </div>
+        <div class="field">
+            <p class="control">
+                <button class="button">Post comment</button>
+            </p>
+        </div>
+    </div>
+</article>

@@ -9,4 +9,4 @@ class Peso(models.Model):
     date = models.DateField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
 
-    REQUIRED_FIELDS = ['peso','date']
+    REQUIRED_FIELDS = ['peso','date','owner']

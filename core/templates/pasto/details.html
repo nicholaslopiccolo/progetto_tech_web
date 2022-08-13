@@ -1,0 +1,72 @@
+{% extends 'layouts/base.html'%}
+
+{% load static widget_tweaks %}
+
+{% block title %}Progetto Tech Web - Details Pasto{% endblock %}
+
+{% block content %}
+<div class="card">
+    {% if user.pk %}
+    <div class="card-header">
+        <div class="card-header-title">Autore: {{ pasto.owner.username }}</div>
+    </div>
+    {% else %}
+    <div class="card-header">
+        <div class="card-header-title">Autore: anonimo</div>
+    </div>
+    {% endif %}
+    <div class="card-content">
+        <div class="field">
+            <label for="" class="label">Foto:</label>
+        {% if pasto %}
+            {% if pasto.foto %}
+            <figure class="image">
+                <img src="{{pasto.foto.url}}">
+            </figure>
+            {% else %}
+            Nessuna foto inserita
+            {% endif %}
+        {% endif %}
+        </div>
+        <div class="field">
+            <label for="" class="label">Descrizione:</label>
+            {{ pasto.descrizione }}
+        </div>
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label for="" class="label">Kcal:</label>
+                    {{ pasto.kcal }}
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label for="" class="label">Tipo:</label>
+                    {{ pasto.tipo_verbose }}
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label for="" class="label">Data:</label>
+            {{ pasto.date }}
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="card-footer-item">
+            {{ pasto.likes }} 
+            <span class="icon">
+                <i class="fa-solid fa-thumbs-up"></i>
+            </span> 
+        </div>
+        <div class="card-footer-item">
+            {{ pasto.dislikes }} 
+            <span class="icon">
+                <i class="fa-solid fa-thumbs-down"></i>
+            </span> 
+        </div>
+    </div>
+</div>
+<div class="m-2">
+    {% include "pasto/commento.html" %}
+</div>
+{% endblock %}

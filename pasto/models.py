@@ -22,7 +22,10 @@ class Pasto(models.Model):
     date = models.DateField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
 
-    REQUIRED_FIELDS=['kcal','descrizione','tipo','date']
+    REQUIRED_FIELDS=['kcal','descrizione','tipo','date','owner']
+
+    def tipo_verbose(self):
+        return dict(Pasto.TIPI_DI_PASTO)[self.tipo]
 
 class Commento(models.Model):
     commento=models.TextField(max_length=512, null=False, blank=False)

@@ -4,10 +4,22 @@
 
 {% block title %}Progetto Tech Web - Form Peso{% endblock %}
 
+{% block style %}
+    <link href="{% static 'ajax_datatable/datatables.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'ajax_datatable/dt/css/dataTables.bulma.min.css' %}" rel="stylesheet" />
+    <link href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+{% endblock  %}
+
+{% block js_head %}
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="{% static 'ajax_datatable/js/utils.js' %}"></script>
+    <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="{% static 'ajax_datatable\datatables.min.js' %}"></script>
+    <script src="{% static 'ajax_datatable/dt/js/dataTables.bulma.min.js' %}"></script>
+{% endblock %}
 
 {% block content %}
-<form action="{% url 'peso-home' %}" method="post">
-
+<form action="{% if peso %}{% url 'peso-home' peso.pk %}{% else %}{% url 'peso-home' %}{% endif %}" method="post">
     {% csrf_token %}
     <div class="card">
         <div class="card-content">
@@ -35,4 +47,28 @@
         </div>
     </div>
 </form>
+<hr />
+<table id="dt_peso">
+
+</table>
+{% endblock %}
+{% block js_foot%}
+<script>
+    $(document).ready(function() {
+        AjaxDatatableViewUtils.initialize_table(
+            $('#dt_peso'),
+            "{% url 'ajax_datatable_peso' %}",
+            {
+                // extra_options (example)
+                processing: false,
+                autoWidth: false,
+                full_row_select: true,
+                scrollX: false
+            }, {
+                // extra_data
+                // ...
+            },
+        );
+    });
+</script>
 {% endblock %}

@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'pasto-home' %}" enctype="multipart/form-data" method="post">
+<form action="{% if pasto %}{% url 'pasto-home' pasto.pk %}{% else %}{% url 'pasto-home' %}{% endif %}" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     <div class="card">
         <div class="card-content">
@@ -27,7 +27,7 @@
             <hr/>
             <div class="field">
                 <label for="" class="label">Descrizione:</label>
-                {% render_field form.descrizione class="textarea" %}
+                {{ form.descrizione }}
             </div>
             <div class="field">
                 <label for="" class="label">Kcal:</label>
@@ -35,12 +35,20 @@
             </div>
             <div class="field">
                 <label for="" class="label">Tipo:</label>
-                {% render_field form.tipo v-model="tipo" class="select input" %}
+                {% render_field form.tipo class="select input" %}
             </div>
             <div class="field">
                 <label for="" class="label">Data:</label>
-                {% render_field form.date type="date" class="input" %}
+                {{ form.date }}
             </div>
+            {% if pasto %}
+                {% if pasto.foto %}
+                <figure class="image">
+                    <img src="{{pasto.foto.url}}">
+                </figure>
+                {% endif %}
+                {{ form.foto }}
+            {% else %}
             <div class="file">
                 <label class="file-label">
                     <label class="label mr-4" style="align-self:flex-end">Inserisci una foto del tuo pasto:</label>
@@ -55,6 +63,7 @@
                     </span>
                 </label>
             </div>
+            {% endif %}
         </div>
         <div class="card-footer">
             <div class="card-footer-item">
@@ -73,7 +82,7 @@
     $(document).ready(function() {
         AjaxDatatableViewUtils.initialize_table(
             $('#dt_pasto'),
-            "ajax_datatable/",
+            "{% url 'ajax_datatable_pasto' %}",
             {
                 // extra_options (example)
                 processing: false,

@@ -13,6 +13,14 @@
         integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{% static 'style/bulma.min.css' %}" rel="stylesheet" type="text/css" />
+    <style>
+        .image img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
     {% block style %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 
