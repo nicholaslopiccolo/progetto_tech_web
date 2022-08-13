@@ -8,10 +8,12 @@ from . import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("pasto/", include("peso.urls")),
-    path("peso/", include("pasto.urls")),
+    path("", include("pasto.urls")),
+    path("peso/", include("peso.urls")),
     path("signin/", views.login_view, name="signin"),
+    path("session/",views.get_config,name="session"),
     path("signup/", views.register_user, name="signup"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("", views.home, name="home")
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -28,14 +28,13 @@
                 {% render_field form.password2 class="input" %}
             </div>
         </div>
-        <div class="field">
-            <div class="control">
-                <label class="checkbox">
-                    <input type="checkbox" name="checkbox-fill-1" id="checkbox">
-                    Save Details
-                </label>
-            </div>
+        <div class="content">
+            <ul>
+                <li>Evita password comuni</li>
+                <li>Lunghezza minima 8 caratteri</li>
+            </ul>
         </div>
+        <hr />
         <button type="submit" name="login" class="button is-link">Login</button>
     </form>
     {% if msg %}

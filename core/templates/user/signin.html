@@ -8,8 +8,7 @@
 {% block content %}
 <div class="box" style="width: 500px; margin: 2rem auto">
     <form role="form" method="post" action="">
-        {% csrf_token %}                   
-
+        {% csrf_token %}
         <div class="field">
             <div class="control">
                 <label class="label">Username</label>
@@ -18,18 +17,17 @@
         </div>
         <div class="field">
             <div class="control">
-                <label class="label">password</label>
+                <label class="label">Password</label>
                 {% render_field form.password class="input" %}
             </div>
         </div>
-        <div class="field">
-            <div class="control">
-                <label class="checkbox">
-                    <input type="checkbox" name="checkbox-fill-1" id="checkbox">
-                    Save Details
-                </label>
-            </div>
+        <div class="content">
+            <ul>
+                <li>Evita password comuni</li>
+                <li>Lunghezza minima 8 caratteri</li>
+            </ul>
         </div>
+        <hr />
         <button type="submit" name="login" class="button is-link">Login</button>
     </form>
     {% if msg %}

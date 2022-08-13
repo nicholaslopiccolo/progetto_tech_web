@@ -1,10 +1,29 @@
 {% extends 'layouts/base.html'%}
 
-{% load static %}
+{% load static widget_tweaks %}
+
 
 {% block title %}Progetto Tech Web{% endblock %}
-
 {% block content%}
-    {% include 'includes/search.html' %}
-    {% include 'includes/sign.html' %}
+{% include 'includes/search.html' %}
+{% if user.pk %}
+<div class="columns is-vcentered" style="height:500px">
+    <div class="column">
+        <a href="{% url 'pasto-home' %}" class="button is-link is-fullwidth" style="height:300px; font-size:60px;">
+            <span>Inserisci Pasto</span>
+            <span class="icon is-small">
+                <i class="fa-solid fa-utensils"></i>
+            </span>
+        </a>
+    </div>
+    <div class="column">
+        <a href="{% url 'peso-home' %}" class="button is-info is-fullwidth" style="height:300px;font-size:60px;">
+            <span>Inserisci Peso</span>
+            <span class="icon is-small">
+                <i class="fa-solid fa-scale-balanced"></i>
+            </span>
+        </a>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

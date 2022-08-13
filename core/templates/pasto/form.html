@@ -1,0 +1,90 @@
+{% extends 'layouts/base.html'%}
+
+{% load static widget_tweaks %}
+
+{% block title %}Progetto Tech Web - Form Pasto{% endblock %}
+
+{% block style %}
+    <link href="{% static 'ajax_datatable/datatables.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'ajax_datatable/dt/css/dataTables.bulma.min.css' %}" rel="stylesheet" />
+    <link href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+{% endblock  %}
+
+{% block js_head %}
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="{% static 'ajax_datatable/js/utils.js' %}"></script>
+    <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="{% static 'ajax_datatable\datatables.min.js' %}"></script>
+    <script src="{% static 'ajax_datatable/dt/js/dataTables.bulma.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'pasto-home' %}" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <div class="card">
+        <div class="card-content">
+            {% include 'includes/search.html' %}
+            <hr/>
+            <div class="field">
+                <label for="" class="label">Descrizione:</label>
+                {% render_field form.descrizione class="textarea" %}
+            </div>
+            <div class="field">
+                <label for="" class="label">Kcal:</label>
+                {% render_field form.kcal class="input" %}
+            </div>
+            <div class="field">
+                <label for="" class="label">Tipo:</label>
+                {% render_field form.tipo v-model="tipo" class="select input" %}
+            </div>
+            <div class="field">
+                <label for="" class="label">Data:</label>
+                {% render_field form.date type="date" class="input" %}
+            </div>
+            <div class="file">
+                <label class="file-label">
+                    <label class="label mr-4" style="align-self:flex-end">Inserisci una foto del tuo pasto:</label>
+                    {% render_field form.foto class="file-input" %}
+                    <span class="file-cta">
+                        <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">
+                            Scegli una foto…
+                        </span>
+                    </span>
+                </label>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="card-footer-item">
+                <button class="button is-link">Invia</button>
+            </div>
+        </div>
+    </div>
+</form>
+<hr />
+<table id="dt_pasto">
+
+</table>
+{% endblock %}
+{% block js_foot%}
+<script>
+    $(document).ready(function() {
+        AjaxDatatableViewUtils.initialize_table(
+            $('#dt_pasto'),
+            "ajax_datatable/",
+            {
+                // extra_options (example)
+                processing: false,
+                autoWidth: false,
+                full_row_select: true,
+                scrollX: false
+            }, {
+                // extra_data
+                // ...
+            },
+        );
+    });
+</script>
+{% endblock %}

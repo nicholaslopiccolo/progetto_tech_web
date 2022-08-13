@@ -1,0 +1,38 @@
+{% extends 'layouts/base.html'%}
+
+{% load static widget_tweaks %}
+
+{% block title %}Progetto Tech Web - Form Peso{% endblock %}
+
+
+{% block content %}
+<form action="{% url 'peso-home' %}" method="post">
+
+    {% csrf_token %}
+    <div class="card">
+        <div class="card-content">
+            <div class="field is-horizontal">
+                <div class="field-label">
+                    <label class="label">Peso:</label>
+                </div>
+                <div class="field-body">
+                    {% render_field form.peso class="input" %}
+                </div>
+            </div>
+            <div class="field is-horizontal">
+                <div class="field-label">
+                    <label class="label">Data:</label>
+                </div>
+                <div class="field-body">
+                    {% render_field form.date type="date" class="input" %}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="card-footer-item">
+                <button class="button is-link">Invia</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

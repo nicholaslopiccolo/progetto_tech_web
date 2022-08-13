@@ -1,5 +1,5 @@
 <div id="search">
-    <div class="field p-2">
+    <div class="field">
         <label class="label">Cerca Pasto</label>
         <div class="control">
             <p class="control has-icons-right">
@@ -11,8 +11,6 @@
         </div>
     </div>
 </div>
-
-{% block js_foot %}
 <script>
     var search = new Vue({
         delimiters:['[[',']]'],
@@ -32,4 +30,4 @@
            
         }
     });
-{% endblock %}
+</script>

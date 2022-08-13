@@ -1,23 +1,75 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="{% static 'js/vue.min.js' %}"></script>
+    <script src="{% static 'js/axios.min.js' %}"></script>
     {% block js_head %}{% endblock %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{% static 'style/bulma.min.css' %}" rel="stylesheet" type="text/css" />
     {% block style %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
+
+    <style>
+        #notification{
+            animation: hideAnimation 0s ease-in 2.5s;
+            animation-fill-mode: forwards;
+          }
+          
+          @keyframes hideAnimation {
+            to {
+              visibility: hidden;
+              width: 0;
+              height: 0;
+            }
+          }
+    </style>
 </head>
+
 <body>
     {% include 'includes/navbar.html' %}
 
-    <section class="container">
+    {% if messages %}
+    <div id="notification" class="p-4" style="opacity: .85">
+        {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+        <div class="notification is-info">
+            {{message}}
+        </div>
+        {% endif %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+        <div class="notification is-success">
+            {{message}}
+        </div>
+        {% endif %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <div class="notification is-danger">
+            {{message}}
+        </div>
+        {% endif %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+        <div class="notification is-warning">
+            <div class="notification is-warning">
+                {{message}}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <section class="container p-4">
         {% block content %}{% endblock %}
     </section>
-    
+
 </body>
 {% block js_foot %}{% endblock %}
+{% block js_navbar %}{% endblock %}
+
 </html>

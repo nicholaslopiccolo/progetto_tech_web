@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
+    'ajax_datatable',
     'pasto',
     'peso'
 ]
@@ -122,3 +123,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
+MEDIA_URL='/media/'
+
+LANGUAGE_CODE = 'it'
+DATE_FORMAT = "d m Y"
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True

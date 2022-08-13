@@ -1,13 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # Create your models here.
-
-
-class Commento(models.Model):
-    pass
-
-class peso(models.Model):
+class Peso(models.Model):
     peso = models.PositiveIntegerField(null=False)
     created = models.DateTimeField(auto_now_add=True)
-    date = models.DateField(auto_now_add=True)
-    commenti = Commento()
+    date = models.DateField()
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+
+    REQUIRED_FIELDS = ['peso','date']

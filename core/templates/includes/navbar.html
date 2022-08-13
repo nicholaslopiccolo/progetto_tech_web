@@ -7,7 +7,10 @@
                 Controllo Alimentare
             </h1>
             <h2 class="subtitle" v-if=configs.username>
-                [[ configs.username ]] - [[ new Date().toLocaleDateString() ]]
+                Hi [[ configs.username ]] - [[ new Date().toLocaleDateString() ]]
+            </h2>
+            <h2 class="subtitle" v-else>
+                Hi Guest - [[ new Date().toLocaleDateString() ]]
             </h2>
         </div>
     </div>
@@ -26,22 +29,25 @@
                         <a id="home" class="navbar-item" href="/">
                             Home
                         </a>
+                        {% if not user.pk %}
                         <a id="logout" class="navbar-item" href="/signin">
                             SignIn
                         </a>
                         <a id="logout" class="navbar-item" href="/signup">
                             SignUp
                         </a>
+                        {% else %}
                         <a id="logout" class="navbar-item" href="/logout">
                             Logout
                         </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </nav>
     </div>
 </section>
-{% block js_foot %}
+{% block js_navbar %}
 <script>
     var nav = new Vue({
         delimiters:['[[',']]'],
@@ -62,16 +68,26 @@
                 }
             },
             configs: {
-                username:'Lop98',
+                username:'',
+                id:0
             }
         },
         created() {
             let self = this;
-            /*axios.get('/configurations').then(res => {
-                let config = res.data;
 
-                self.configs = config;
-            })*/
+            try{
+                axios.get('/session').then(res => {
+                    let config = res.data;
+                    self.configs = config;
+                }).catch(err=>{
+                    self.configs = {
+                        username:'',
+                        id:0
+                    };
+                })
+            }
+            catch{
+            }
         },
         mounted() {
             this.setActive();
@@ -91,7 +107,7 @@
                     let el = document.getElementById(val);
                     el.className += el.className ? ' is-active' : '';
                 } catch (e) {
-                    console.log(`${val}: non è una voce del menù`);
+                    //console.log(`${val}: non è una voce del menù`);
                 }
             },
             toggleActive(val) {
