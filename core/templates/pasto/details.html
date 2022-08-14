@@ -52,21 +52,42 @@
         </div>
     </div>
     <div class="card-footer">
-        <div class="card-footer-item">
+        <a href="{% url "pasto-like" pasto.pk %}" class="card-footer-item">
             {{ pasto.likes }} 
             <span class="icon">
                 <i class="fa-solid fa-thumbs-up"></i>
             </span> 
-        </div>
-        <div class="card-footer-item">
-            {{ pasto.dislikes }} 
-            <span class="icon">
-                <i class="fa-solid fa-thumbs-down"></i>
-            </span> 
-        </div>
+        </a>
     </div>
 </div>
 <div class="m-2">
-    {% include "pasto/commento.html" %}
+    {% if user.pk %}
+        {% include "pasto/commento.html" %}
+    {% else %}
+        <strong class="has-text-danger">Sezione commenti disabilitata per gli utenti guest.</strong>
+    {% endif %}
 </div>
+<form action="{% url 'pasto-reply' pasto.pk %}" method="post">
+    {% csrf_token %}
+
+    <article class="media">
+        <figure class="media-left">
+            <p class="image is-64x64">
+                <img src="https://bulma.io/images/placeholders/128x128.png">
+            </p>
+        </figure>
+        <div class="media-content">
+            <div class="field">
+                <p class="control">
+                    <textarea class="textarea" name="commento" maxlength="512" placeholder="Add a comment..."></textarea>
+                </p>
+            </div>
+            <div class="field">
+                <p class="control">
+                    <button class="button">Post comment</button>
+                </p>
+            </div>
+        </div>
+    </article>
+</form>
 {% endblock %}

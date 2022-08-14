@@ -1,4 +1,4 @@
-{% for commento in commenti %}
+{% for commento,l in commenti %}
     <article class="media">
         <figure class="media-left">
             <p class="image is-64x64">
@@ -12,33 +12,23 @@
                     <br>
                     {{commento.commento}}
                     <br>
-                    <small>{{commento.likes}}<a>Like</a> · {{commento.dislikes}}<a>Dislike</a> . <a>Reply</a></small>
+                    <small>
+                        <a href="{% url "pasto-reply-like" commento.pk %}">
+                            {{ commento.likes }} 
+                            <span class="icon">
+                                <i class="fa-solid fa-thumbs-up"></i>
+                            </span> 
+                        </a>
+                        <a href="{% url 'pasto-reply' pasto.pk commento.pk %}">Reply</a>
+                    </small>
                 </p>
             </div>
-            {% if commento.reply %}
+            {% if l %}
+            {% with commenti=l %}
                 {% include "pasto/commento.html" %}
+            {% endwith %}
             {% endif %}
             
         </div>
     </article>
 {% endfor %}
-<!--INPUT DELL'UTENTE-->
-<article class="media">
-    <figure class="media-left">
-        <p class="image is-64x64">
-            <img src="https://bulma.io/images/placeholders/128x128.png">
-        </p>
-    </figure>
-    <div class="media-content">
-        <div class="field">
-            <p class="control">
-                <textarea class="textarea" placeholder="Add a comment..."></textarea>
-            </p>
-        </div>
-        <div class="field">
-            <p class="control">
-                <button class="button">Post comment</button>
-            </p>
-        </div>
-    </div>
-</article>

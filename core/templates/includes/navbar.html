@@ -30,14 +30,20 @@
                             Home
                         </a>
                         {% if not user.pk %}
-                        <a id="logout" class="navbar-item" href="/signin">
+                        <a id="logout" class="navbar-item" href="{% url "signin" %}">
                             SignIn
                         </a>
-                        <a id="logout" class="navbar-item" href="/signup">
+                        <a id="logout" class="navbar-item" href="{% url "signup" %}">
                             SignUp
                         </a>
                         {% else %}
-                        <a id="logout" class="navbar-item" href="/logout">
+                        <a id="logout" class="navbar-item" href="{% url "pasto-home" %}">
+                            Pasto
+                        </a>
+                        <a id="logout" class="navbar-item" href="{% url "peso-home" %}">
+                            Peso
+                        </a>
+                        <a id="logout" class="navbar-item" href="{% url "logout" %}">
                             Logout
                         </a>
                         {% endif %}

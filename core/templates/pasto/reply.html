@@ -1,0 +1,106 @@
+{% extends 'layouts/base.html'%}
+
+{% load static widget_tweaks %}
+
+{% block title %}Progetto Tech Web - Reply Pasto{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <div class="card-header-title">Autore: {{ pasto.owner.username }}</div>
+    </div>
+    <div class="card-content">
+        <div class="field">
+            <label for="" class="label">Foto:</label>
+            {% if pasto.foto %}
+                <figure class="image">
+                    <img src="{{ pasto.foto.url }}" alt="{{ pasto.descrizione }}">
+                </figure>
+            {% else %}
+                Nessuna foto inserita
+            {% endif %}
+        </div>
+        <div class="field">
+            <label for="" class="label">Descrizione:</label>
+        </div>
+        <div class="columns">
+            <div class="column">
+                <div class="field">
+                    <label for="" class="label">Kcal:</label>
+                    {{ pasto.kcal }}
+                </div>
+            </div>
+            <div class="column">
+                <div class="field">
+                    <label for="" class="label">Tipo:</label>
+                    {{ pasto.tipo_verbose }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a href="{% url "pasto-like" pasto.pk %}" class="card-footer-item">
+            {{ pasto.likes }} 
+            <span class="icon">
+                <i class="fa-solid fa-thumbs-up"></i>
+            </span> 
+        </a>
+    </div>
+</div>
+<div class="m-2">
+    {% if commento.pk %}
+    <article class="media">
+        <figure class="media-left">
+            <p class="image is-64x64">
+                <img src="https://bulma.io/images/placeholders/128x128.png">
+            </p>
+        </figure>
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong>{{commento.owner.username}}</strong>
+                    <br>
+                    {{commento.commento}}
+                    <br>
+                    <small>
+                        <small>
+                            <a href="{% url 'pasto-reply-like' commento.pk %}">
+                                {{ commento.likes }} 
+                                <span class="icon">
+                                    <i class="fa-solid fa-thumbs-up"></i>
+                                </span> 
+                            </a>
+                        </small>
+                    </small>
+                </p>
+            </div>
+            
+        </div>
+    </article>
+    <hr>
+    {% endif %}
+    <form action="{% url 'pasto-reply' pasto.pk commento.pk %}" method="post">
+        {% csrf_token %}
+
+        <article class="media">
+            <figure class="media-left">
+                <p class="image is-64x64">
+                    <img src="https://bulma.io/images/placeholders/128x128.png">
+                </p>
+            </figure>
+            <div class="media-content">
+                <div class="field">
+                    <p class="control">
+                        <textarea class="textarea" name="commento" maxlength="512" placeholder="Add a comment..."></textarea>
+                    </p>
+                </div>
+                <div class="field">
+                    <p class="control">
+                        <button class="button">Post comment</button>
+                    </p>
+                </div>
+            </div>
+        </article>
+    </form>
+</div>
+{% endblock %}
