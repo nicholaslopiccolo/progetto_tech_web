@@ -1,19 +1,16 @@
 {
-    // Usare IntelliSense per informazioni sui possibili attributi.
-    // Al passaggio del mouse vengono visualizzate le descrizioni degli attributi esistenti.
-    // Per altre informazioni, visitare: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
             "name": "Python: Django",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}\\manage.py",
+            "python": "/home/nicholas/Uni_linux/progetto_tech_web/venv/bin/python3",
+            "program": "${workspaceFolder}/manage.py",
             "args": [
                 "runserver"
             ],
-            "django": true,
-            "justMyCode": true
+            "django": true
         }
     ]
 }

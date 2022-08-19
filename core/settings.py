@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +31,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'ajax_datatable',
     'pasto',
-    'peso'
+    'peso',
+    'administrator'
 ]
 
 MIDDLEWARE = [
@@ -133,3 +135,18 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+# EMAIL DATA
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_FILE_PATH = f"{MEDIA_ROOT}/email_out"
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+#EMAIL_USE_SSL = True
+
+if DEBUG:
+    BASE_URL = "http://localhost:8000"
+else:
+    BASE_URL = config('BASE_URL')

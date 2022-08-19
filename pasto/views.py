@@ -8,6 +8,8 @@ from django.contrib import messages
 
 from .models import Pasto, Commento, LikeCommento, LikePasto
 from .forms import PastoForm
+from core.notification import send_notification
+from core.settings import BASE_URL
 
 
 # Create your views here.
@@ -91,6 +93,18 @@ def create_commento(request,pasto=None,commento=None):
             owner=request.user,
             reply=commento
         ).save()
+
+        # Notifica per l'owner del post
+        if pasto.owner != request.user:
+            sub = "Progetto tech_web - Nuovo commento sotto il tuo post"
+            msg = "Nuovo commento sotto il tuo post visibile al link {0}{1} da parte di {2}.".format(BASE_URL,reverse('pasto-details',args=[pasto.pk]),request.user.username)
+            send_notification([pasto.owner], msg, subject=sub)
+
+        # Notifica per il creatore del commento e per le persone che partecipano al thread
+        if commento and commento.owner:
+            sub = "Progetto tech_web - risposta al commento"
+            msg = "Nuovo commento sul post {0}{1} da parte di {2}.".format(BASE_URL,reverse('pasto-details',args=[pasto.pk]),request.user.username)
+            send_notification([c.owner for c in Commento.objects.filter(reply=commento) if c.owner != request.user], msg, subject=sub)
         messages.success(request,"Commento inserito correttamente.")
         return redirect("pasto-details",pasto.pk)
     else:
