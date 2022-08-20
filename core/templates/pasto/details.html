@@ -8,7 +8,18 @@
 <div class="card">
     {% if user.pk %}
     <div class="card-header">
-        <div class="card-header-title">Autore: {{ pasto.owner.username }}</div>
+        <div class="card-header-title">
+            Autore: {{ pasto.owner.username }}
+        </div>
+        <div class="card-header-icon">
+            <span class="icon has-text-warning">
+                <i class="fa-solid fa-star"></i>
+            </span>
+            <span>ADMIN </span>
+            <span class="icon has-text-warning">
+                <i class="fa-solid fa-star"></i>
+            </span>
+        </div>
     </div>
     {% else %}
     <div class="card-header">

@@ -104,7 +104,8 @@ def create_commento(request,pasto=None,commento=None):
         if commento and commento.owner:
             sub = "Progetto tech_web - risposta al commento"
             msg = "Nuovo commento sul post {0}{1} da parte di {2}.".format(BASE_URL,reverse('pasto-details',args=[pasto.pk]),request.user.username)
-            send_notification([c.owner for c in Commento.objects.filter(reply=commento) if c.owner != request.user], msg, subject=sub)
+            send_notification({c.owner for c in Commento.objects.filter(reply=commento) if c.owner != pasto.owner and c.owner != request.user}, msg, subject=sub)
+        
         messages.success(request,"Commento inserito correttamente.")
         return redirect("pasto-details",pasto.pk)
     else:
@@ -120,6 +121,11 @@ def toggle_like_commento(request, commento=None):
         except LikeCommento.DoesNotExist:
             LikeCommento(commento=commento,owner=request.user).save()
             messages.success(request,"LIKE AL COMMENTO AGGIUNTO")
+            if commento.owner != request.user:
+                sub = "Progetto tech_web - {0} ha messo like al tuo commento".format(request.user.username)
+                msg = "{0} ha messo like al tuo commento {1}{2}.".format(request.user.username,BASE_URL,reverse('pasto-details',args=[commento.pasto.pk]))
+                send_notification([commento.owner], msg, subject=sub)
+
         return redirect("pasto-details", commento.pasto.pk)
     return redirect("pasto-home")
 
@@ -133,6 +139,10 @@ def toggle_like_pasto(request, pasto=None):
         except LikePasto.DoesNotExist:
             LikePasto(pasto=pasto,owner=request.user).save()
             messages.success(request,"LIKE AL PASTO AGGIUNTO")
+            if pasto.owner != request.user:
+                sub = "Progetto tech_web - {0} ha messo like al tuo commento".format(request.user.username)
+                msg = "{0} ha messo like al tuo commento {1}{2}.".format(request.user.username,BASE_URL,reverse('pasto-details',args=[pasto.pk]))
+                send_notification([pasto.owner], msg, subject=sub)
         return redirect("pasto-details", pasto.pk)
     return redirect("pasto-home")
 
