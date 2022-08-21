@@ -29,3 +29,11 @@ pipenv shell
 pip install -r requirements.txt
 ```
 
+Per completare l'installazione bisogna eveguire la migrazione delle modifiche con il seguente comando:
+```
+python .\manage.py migrate
+```
+Per eseguire il programma:
+```
+python .\manage.py runserver
+```
