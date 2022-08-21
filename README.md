@@ -15,17 +15,17 @@ cd progetto_tech_web
 ```
 Per un installazione ottimale di consiglia l'utilizzo di un environment virtuale con uno dei due moduli seguenti:
 - virtualenv
-    - ```
-    pip install virtualenv
-    virtualenv venv
-    source venv/bin/activate
-    pip install -r requirements.txt
-    ```
+```
+pip install virtualenv
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
 - pipenv
-    - ```
-    pip install pipenv
-    pipenv --venv
-    pipenv shell
-    pip install -r requirements.txt
-    ```
+```
+pip install pipenv
+pipenv --venv
+pipenv shell
+pip install -r requirements.txt
+```
 
