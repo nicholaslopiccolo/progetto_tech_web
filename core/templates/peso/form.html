@@ -70,5 +70,10 @@
             },
         );
     });
+    function sendDelete(uri){
+        if(confirm("Cancellare il pasto?")){
+            window.location.href = uri
+        }
+    }
 </script>
 {% endblock %}

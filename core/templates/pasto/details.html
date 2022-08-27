@@ -11,15 +11,27 @@
         <div class="card-header-title">
             Autore: {{ pasto.owner.username }}
         </div>
+        {% if pasto.owner.is_superuser %}
+        <div class="card-header-icon">
+            <span class="icon has-text-danger">
+                <i class="fa-solid fa-star"></i>
+            </span>
+            <span>OWNER</span>
+            <span class="icon has-text-danger">
+                <i class="fa-solid fa-star"></i>
+            </span>
+        </div>
+        {% elif pasto.owner.is_staff %}
         <div class="card-header-icon">
             <span class="icon has-text-warning">
                 <i class="fa-solid fa-star"></i>
             </span>
-            <span>ADMIN </span>
+            <span>ADMIN</span>
             <span class="icon has-text-warning">
                 <i class="fa-solid fa-star"></i>
             </span>
         </div>
+        {% endif %}
     </div>
     {% else %}
     <div class="card-header">
@@ -84,7 +96,7 @@
     <article class="media">
         <figure class="media-left">
             <p class="image is-64x64">
-                <img src="https://bulma.io/images/placeholders/128x128.png">
+                <img src="{% static 'default.jpg' %}">
             </p>
         </figure>
         <div class="media-content">

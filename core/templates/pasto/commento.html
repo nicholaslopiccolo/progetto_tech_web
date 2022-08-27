@@ -1,8 +1,9 @@
+{% load static %}
 {% for commento,l in commenti %}
     <article class="media">
         <figure class="media-left">
             <p class="image is-64x64">
-                <img src="https://bulma.io/images/placeholders/128x128.png">
+                <img src="{% static 'default.jpg' %}">
             </p>
         </figure>
         <div class="media-content">
@@ -19,7 +20,7 @@
                                 <i class="fa-solid fa-thumbs-up"></i>
                             </span> 
                         </a>
-                        <a href="{% url 'pasto-reply' pasto.pk commento.pk %}">Reply</a>
+                        <a href="{% url 'pasto-reply' pasto.pk commento.pk %}">rispondi</a>
                     </small>
                 </p>
             </div>

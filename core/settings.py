@@ -20,7 +20,6 @@ ALLOWED_HOSTS = ['localhost','127.0.0.1',]
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -31,8 +30,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'ajax_datatable',
     'pasto',
-    'peso',
-    'administrator'
+    'peso'
 ]
 
 MIDDLEWARE = [

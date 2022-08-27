@@ -7,7 +7,6 @@ from django.urls import reverse
 
 
 class PesoAjaxDatatableView(AjaxDatatableView):
-
     model = Peso
     title = 'Pesate'
     initial_order = [["date", "dsc"], ]
@@ -51,7 +50,7 @@ class PesoAjaxDatatableView(AjaxDatatableView):
                     </a>
                 </p>
                 <p class="control">
-                    <a class="button is-danger" href="{1}">
+                    <a class="button is-danger" href="javascript:sendDelete('{1}')">
                         <span class="icon">
                             <i class="fa-solid fa-trash-can"></i>
                         </span>

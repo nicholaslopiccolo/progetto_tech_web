@@ -140,8 +140,8 @@ def toggle_like_pasto(request, pasto=None):
             LikePasto(pasto=pasto,owner=request.user).save()
             messages.success(request,"LIKE AL PASTO AGGIUNTO")
             if pasto.owner != request.user:
-                sub = "Progetto tech_web - {0} ha messo like al tuo commento".format(request.user.username)
-                msg = "{0} ha messo like al tuo commento {1}{2}.".format(request.user.username,BASE_URL,reverse('pasto-details',args=[pasto.pk]))
+                sub = "Progetto tech_web - {0} ha messo like al tuo pasto".format(request.user.username)
+                msg = "{0} ha messo like al tuo pasto {1}{2}.".format(request.user.username,BASE_URL,reverse('pasto-details',args=[pasto.pk]))
                 send_notification([pasto.owner], msg, subject=sub)
         return redirect("pasto-details", pasto.pk)
     return redirect("pasto-home")

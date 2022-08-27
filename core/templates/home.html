@@ -3,71 +3,73 @@
 {% load static widget_tweaks %}
 
 {% if user.pk %}
-    {% block js_head%}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.4/apexcharts.min.js" integrity="sha512-oUoSexkALUPd0BQaO/0m029XijXQ7XlFbPIhDNvzD8r2XhUjidiRo/8YhJGpoevLZVRwRFBvygSc9jV2TagjfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    {% endblock %}
-    {% block syle %}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.4/apexcharts.min.css" integrity="sha512-Ax++m07N1ygXmTSeRlQZnB5leVSw9eDeHQZ2ltn7oln1U3d+6d+/u1JEZ/zY/tLtmmEL741jEnDUlmWttBPLOA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    {% endblock %}
+{% block js_head%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.4/apexcharts.min.js"
+    integrity="sha512-oUoSexkALUPd0BQaO/0m029XijXQ7XlFbPIhDNvzD8r2XhUjidiRo/8YhJGpoevLZVRwRFBvygSc9jV2TagjfQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+{% block syle %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.4/apexcharts.min.css"
+    integrity="sha512-Ax++m07N1ygXmTSeRlQZnB5leVSw9eDeHQZ2ltn7oln1U3d+6d+/u1JEZ/zY/tLtmmEL741jEnDUlmWttBPLOA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
 {% endif %}
 
 {% block title %}Progetto Tech Web{% endblock %}
 {% block content%}
 {% include 'includes/search.html' %}
 {% if user.is_staff %}
+    {% include 'includes/admin-dashboard.html'%}
+{% endif %}
+{% if user.pk %}
 <div id="dash" class="container m-2 p-2">
-    <strong class="title">Dashboard Admin</strong>
     <div class="columns is-vcentered">
         <div class="column">
             <div class="card has-text-centered">
                 <div class="card-header">
-                    <div class="card-header-title">Lista utenti e ultimo login</div>
+                    <div class="card-header-title">Kcal</div>
                 </div>
-                <div class="card-content">
-                    <h2 class="subtitle">Utenti totali: {{ utenti.count }}</h2>
-                    {% for u in utenti %}
-                        <p>{{ u.username }} : {{ u.last_login }}</p>
-                    {% endfor %}
+                <div class="card-content" style="height:200px">
+                    <h2 class="subtitle">Calorie consumate oggi</h2>
+                    <h2 class="title">{{ kcal_totali }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card has-text-centered">
+                <div class="card-header">
+                    <div class="card-header-title">Peso</div>
+                </div>
+                <div class="card-content" style="height:200px">
+                    <h2 class="subtitle">Peso attuale: {{peso.attuale}}</h2>
+                    <hr>
+                    <h2 class="subtitle">Differenza di peso</h2>
+                    <h1 class="title">{% if peso.diff > 0 %}+ {% endif %}{{peso.diff}} Kg</h1>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card has-text-centered">
+                <div class="card-header">
+                    <div class="card-header-title">Social</div>
+                </div>
+                <div class="card-content" style="height:200px">
+                    <h2 class="subtitle">Likes totali ai tuoi pasti: {{ like_pasti }}</h2>
+                    <hr>
+                    <h2 class="subtitle">Likes totali ai tuoi commenti: {{ like_commenti }}</h2>
                 </div>
             </div>
         </div>
     </div>
-</div>
-{% endif %}
-{% if user.pk %}
-<div id="dash" class="container m-2 p-2">
-    <strong class="title">Dashboard Utente</strong>
-    <div class="columns is-vcentered">
-        <div class="column">
-            <div class="card has-text-centered">
-                <div class="card-header">
-                    <div class="card-header-title">Kcal totali oggi</div>
-                </div>
-                <div class="card-content" style="height:350px">
-                    {{ kcal_totali }}
-                </div>
-            </div>
-        </div>
-        <div class="column">
+    <div class="columns is-mobile is-centered">
+        <div class="column is-4">
             <div class="card has-text-centered">
                 <div class="card-header">
                     <div class="card-header-title">Kcal totali su tipo</div>
                 </div>
-                <div class="card-content" style="height:350px">
+                <div class="card-content" style="height:320px">
                     <h2 class="subtitle">Pasti inseriti: {{totale_pasti}}</h2>
-                    <div id="chart"></div>
-                </div>
-            </div>
-        </div>
-        <div class="column">
-            <div class="card has-text-centered">
-                <div class="card-header">
-                    <div class="card-header-title">Likes totali</div>
-                </div>
-                <div class="card-content" style="height:350px">
-                    Pasti: {{ like_pasti }}
-                    <br>
-                    Commenti: {{ like_commenti }}
+                    <div id="chart" class="has-text-centered"></div>
                 </div>
             </div>
         </div>
@@ -94,13 +96,13 @@
 {% endif %}
 {% endblock %}
 {% block js_foot %}
-    {% if user.pk %}
-    <script>
-        // Grafo totale kcal su tipo
-        const data = {{ grafo_kcal_tipo|safe }};
-        var options = {
-            series: data.data,
-            chart: {
+{% if user.pk %}
+<script>
+    // Grafo totale kcal su tipo
+    const data = {{ grafo_kcal_tipo | safe }};
+    var options = {
+        series: data.data,
+        chart: {
             width: 380,
             type: 'pie',
         },
@@ -108,18 +110,18 @@
         responsive: [{
             breakpoint: 480,
             options: {
-            chart: {
-                width: 200
-            },
-            legend: {
-                position: 'bottom'
-            }
+                chart: {
+                    width: 200
+                },
+                legend: {
+                    position: 'bottom'
+                }
             }
         }]
-        };
+    };
 
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
-    </script>
-    {% endif %}
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+</script>
+{% endif %}
 {% endblock %}

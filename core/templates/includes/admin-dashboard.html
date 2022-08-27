@@ -1,0 +1,66 @@
+<div id="dash-admin" class="container m-2 p-2">
+    <strong class="title">Dashboard Admin</strong>
+    <div class="columns is-vcentered mt-3">
+        <div class="column">
+            <div class="card has-text-centered">
+                <div class="card-header">
+                    <div class="card-header-title">Lista utenti:</div>
+                </div>
+                <div class="card-content">
+                    <h2 class="subtitle">Utenti totali: {{ utenti.count }}</h2>
+                    <table class="table is-bordered" style="text-align: left;margin:0 auto">
+                        <thead>
+                            <tr>
+                                <th>Tipologia d'utente</th>
+                                <th>Username</th>
+                                <th>email</th>
+                                <th>Ultimo accesso</th>
+                                <th>Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for u in utenti %}
+                            <tr>
+                                <td>
+                                    {% if u.is_superuser %}
+                                        <span class="icon has-text-danger">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span> owner
+                                    {% elif u.is_staff %}
+                                        <span class="icon has-text-warning">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span> staff
+                                    {% else %}utente
+                                    {% endif %}
+                                </td>
+                                <td>{{ u.username }}</td>
+                                <td>{{ u.email }}</td>
+                                <td>{% if u.last_login %}{{ u.last_login }}{% else %}Accesso non effettuato{% endif%}</td>
+                                <td>
+                                    <a href="javascript:sendAction('{% url 'staff-toggle-active' u.pk %}')">
+                                        <span title="{% if u.is_active %}Disattiva{% else %}Attiva{% endif %} l'utente" class="icon {% if u.is_active %}has-text-success{% else %}has-text-danger{% endif %}"><i class="fa-solid fa-circle"></i></span>
+                                    </a>
+                                    {% if user.is_superuser %}
+                                    <a href="javascript:sendAction('{% url 'staff-toggle-promote' u.pk %}')" class="has-text-black">
+                                        <span title="{% if u.is_staff %}Retrocedi{% else %}Promuovi{% endif %} l'utente" class="icon"><i class="fa-solid fa-address-card" style="{% if u.is_staff %}opacity: 0.6;{% endif %}"></i></span>
+                                    </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function sendAction(uri){
+        if(confirm("Eseguire l'azione sull'utente selezionato?")){
+            window.location.href = uri
+        }
+    }
+</script>
+<strong class="title pl-2">Dashboard Utente</strong>

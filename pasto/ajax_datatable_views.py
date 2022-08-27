@@ -60,7 +60,7 @@ class PastoAjaxDatatableView(AjaxDatatableView):
                     </a>
                 </p>
                 <p class="control">
-                    <a class="button is-danger" href="{2}">
+                    <a class="button is-danger" href="javascript:sendDelete('{2}')">
                         <span class="icon">
                             <i class="fa-solid fa-trash-can"></i>
                         </span>
