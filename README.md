@@ -24,7 +24,6 @@ pip install -r requirements.txt
 - pipenv
 ```
 pip install pipenv
-pipenv --venv
 pipenv shell
 pip install -r requirements.txt
 ```
