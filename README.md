@@ -36,3 +36,8 @@ Per eseguire il programma:
 ```
 python .\manage.py runserver
 ```
+
+Per creare un utente admin lanciare il seguente comando e seguire la procedura
+```
+python manage.py createsuperuser
+```
